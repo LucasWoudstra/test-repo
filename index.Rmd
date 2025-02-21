@@ -24,9 +24,11 @@ compmus <- read.csv("C:/Users/lucas/test-repo/compmus2025.csv")
 summary(compmus)
 ``` 
 
-### Visualisation
+My two songs are "make your transition" by Omaks, and "Rampage (VIP Mix)" by Bollman. I acquired them via soundcloud, as they were labeled as free downloads.  These two songs are among my favourite to dance to on a rave/festival, or even in my own time. The reason I chose to download existing songs from soundcloud is because I think these DJ's make enough money already. Another reason is that when I tried creating songs with AI, no good techno came from it, which is what I wanted.
 
-My first visualisation, for now only the 'bad' plot with the compmus dataset
+
+### Visualisation
+My first visualization, for now only the 'bad' plot with the compmus dataset
 
 Here the arousal is plotted against the tempo. Not much is visible in this plot.
 
@@ -35,6 +37,7 @@ Here the arousal is plotted against the tempo. Not much is visible in this plot.
 <br>
 <br>
 <br>
+
 ```{r}
 compmus <- compmus |> mutate(
   label = ifelse(filename %in% c("lucas-w-1", "lucas-w-2"), filename, NA)  # Label only Lucas' songs
