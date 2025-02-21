@@ -18,16 +18,61 @@ Column {data-width=650}
 
 ### Introduction
 
-This is my introduction page, for now containing the summary of the cars dataset
-```{r cars}
-summary(cars)
-```
+This is my introduction page, for now containing the summary of the compmus dataset
+```{r load-data, echo=FALSE}
+compmus <- read.csv("C:/Users/lucas/test-repo/compmus2025.csv")
+summary(compmus)
+``` 
 
 ### Visualisation
 
-My first visualisation, for now only the cars data plot
-```{r pressure, echo=FALSE}
-plot(pressure)
+My first visualisation, for now only the 'bad' plot with the compmus dataset
+
+Here the arousal is plotted against the tempo. Not much is visible in this plot.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+```{r}
+compmus <- compmus |> mutate(
+  label = ifelse(filename %in% c("lucas-w-1", "lucas-w-2"), filename, NA)  # Label only Lucas' songs
+)
+compmus |>                   # Start with the data
+  ggplot(                     # Set up the plot.
+    aes(
+      x = tempo,
+      y = arousal,
+      size = instrumentalness,
+      colour = danceability
+    )
+  ) +
+  geom_point() +   # Scatter plot.
+  geom_text(aes(label = label), hjust = 1.2, vjust = -0.5, size = 4, na.rm = TRUE) +
+  geom_rug(linewidth = 0.1) + # Add 'fringes' to show data distribution.
+  scale_x_continuous(         # Fine-tune the x axis.
+    limits = c(50, 200),
+    breaks = c(50, 100, 150, 200), # Specify grid lines
+    minor_breaks = NULL       # Remove 'minor' grid lines.
+  ) +
+  scale_y_continuous(         # Fine-tune the y axis in the same way.
+    limits = c(1, 9),
+    breaks = c(1, 5, 9),
+    minor_breaks = NULL
+  ) +
+  scale_colour_viridis_c() +  # Use the popular viridis colour palette.
+  scale_size_continuous(      # Fine-tune the sizes of each point.
+    trans = "exp",            # Use an exp transformation to emphasise loud..
+    guide = "none"            # Remove the legend for size.
+  ) +
+  theme_light() +             # Use a simpler theme.
+  labs(                       # Make the titles nice.
+    x = "Tempo",
+    y = "Arousal",
+    colour = "Danceability"
+  )
+ggplotly()
 ```
 
 ### Conclusion
